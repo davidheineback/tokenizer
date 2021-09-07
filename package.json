@@ -1,0 +1,35 @@
+{
+  "name": "@david-heineback/tokenizer",
+  "version": "1.0.0",
+  "description": "Takes a string and make tokens ",
+  "type": "module",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "test": "cross-env NODE_OPTIONS=--experimental-vm-modules npx jest --testTimeout=20000 --runInBand --detectOpenHandles --verbose --forceExit",
+    "publish-public": "npm publish --access=public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/davidheineback/tokenizer.git"
+  },
+  "author": "David Heinebäck",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/davidheineback/tokenizer/issues"
+  },
+  "homepage": "https://github.com/davidheineback/tokenizer#readme",
+  "devDependencies": {
+    "jest": "^27.1.0"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "transform": {},
+    "coveragePathIgnorePatterns": [
+      "/node_modules/"
+    ]
+  },
+  "dependencies": {
+    "cross-env": "^7.0.3"
+  }
+}
