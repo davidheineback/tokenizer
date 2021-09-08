@@ -14,7 +14,6 @@ class ArithmeticTokenizer {
   constructor (typeOfTokenizer, tokenString) {
     this.typeOfTokenizer = 'ARITHMETIC'
     this.tokenString = tokenString
-    // this.#activeTokenizerRegex = this.#setActiveTokenizerRegex()
   }
 
   getName() {
@@ -44,24 +43,6 @@ class ArithmeticTokenizer {
   getAllTokens() {
     
   }
-
-    // #setActiveTokenizerRegex () {
-  //   switch (this.typeOfTokenizer) {
-  //     case TOKENIZER_OPTIONS.WORD_AND_DOT:
-  //       return {
-  //         word: /^[\w|åäöÅÄÖ]+/,
-  //         dot: /^\./
-  //     }
-  //     case TOKENIZER_OPTIONS.ARITHMETIC:
-  //       return {
-  //         number: /^[0-9]+(\.([0-9])+)?/ ,
-  //         add: /^[+]/,
-  //         multply: /^[]/
-  //     }
-  //     default:
-  //       throw new Error('Please choose a supported tokenizer type')
-  //   }
-  // }
 
 }
 

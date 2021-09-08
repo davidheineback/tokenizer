@@ -12,7 +12,6 @@ class WordTokenizer {
   constructor (typeOfTokenizer, tokenString) {
     this.typeOfTokenizer = 'WORD_AND_DOT'
     this.tokenString = tokenString
-    // this.#activeTokenizerRegex = this.#setActiveTokenizerRegex()
   }
 
 
