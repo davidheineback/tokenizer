@@ -1,3 +1,12 @@
+const LEXICAL_GRAMMAR = {
+  NUMBER: /^[0-9]+(\.([0-9])+)?/ ,
+  ADD: /^[+]/,
+  MULTIPLY: /^[*]/,
+  SUBTRACT: /^[-]/,
+  DIVIDE: /^[\/]/,
+  PARENTHESES: /^[()]/
+}
+
 class ArithmeticTokenizer {
   #activeTokenizerRegex
   #arrayOfTokens = []
