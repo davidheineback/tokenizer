@@ -1,37 +1,43 @@
+import WordTokenizer from './WordTokenizer.js'
+import ArithmeticTokenizer from './ArithmeticTokenizer.js'
+
 const TOKENIZER_OPTIONS = {
-  'WORD_AND_DOT': 'WORD_AND_DOT',
-  'ARITHMETIC': 'ARITHMETIC',
-  'JAVA': 'JAVA',
-  'JAVASCRIPT': 'JAVASCRIPT'
+  WORD_AND_DOT: 'WORD_AND_DOT',
+  ARITHMETIC: 'ARITHMETIC',
+  JAVA: 'JAVA',
+  JAVASCRIPT: 'JAVASCRIPT'
 }
 
 Object.freeze(TOKENIZER_OPTIONS)
 
 class Tokenizer {
-  #activeTokenizerRegex
+  #activeTokenizer
+  #tokenString
+  #typeOfTokenizer
 
   constructor (typeOfTokenizer, tokenString) {
-    this.typeOfTokenizer = typeOfTokenizer
-    this.tokenString = tokenString
-    this.#activeTokenizerRegex = this.#setActiveTokenizerRegex()
+    this.#typeOfTokenizer = typeOfTokenizer
+    this.#tokenString = tokenString
+    this.#setActiveTokenizer()
   }
 
-  printTest () {
-    console.log(process.argv.slice(2))
-    return 'test'
-  }
-
-  #setActiveTokenizerRegex () {
-    switch (this.typeOfTokenizer) {
+  async #setActiveTokenizer () {
+    switch (this.#typeOfTokenizer) {
       case TOKENIZER_OPTIONS.WORD_AND_DOT:
-        return 'regex for words'
+        // const { default: WordTokenizer } = await import('./WordTokenizer.js')
+        this.#activeTokenizer = new WordTokenizer()
+        break
       case TOKENIZER_OPTIONS.ARITHMETIC:
-        return 'regex for arithmetic'
+        // const { default: ArithmeticTokenizer } = await import('./ArithmeticTokenizer.js')
+        this.#activeTokenizer = new ArithmeticTokenizer()
+        break
       default:
         throw new Error('Please choose a supported tokenizer type')
     }
-    // takes this.tokenizerType and returns a regexpression to use to determine tokens
-    //createTokens(regex)
+  }
+
+  getName() {
+    this.#activeTokenizer.getName()
   }
 
   activeToken() {
@@ -50,8 +56,12 @@ class Tokenizer {
     // counts the number of tokens
   }
 
-  createTokens(regex) {
+  createTokens() {
     // takes a regex and returns tokens or throws error
+  }
+
+  getAllTokens() {
+    
   }
 
 
