@@ -3,21 +3,19 @@ import ArithmeticTokenizer from './ArithmeticTokenizer.js'
 
 const TOKENIZER_OPTIONS = {
   WORD_AND_DOT: 'WORD_AND_DOT',
-  ARITHMETIC: 'ARITHMETIC',
-  JAVA: 'JAVA',
-  JAVASCRIPT: 'JAVASCRIPT'
+  ARITHMETIC: 'ARITHMETIC'
 }
 
 Object.freeze(TOKENIZER_OPTIONS)
 
 class Tokenizer {
   #activeTokenizer
-  #tokenString
+  #stringToTokenize
   #typeOfTokenizer
 
-  constructor (typeOfTokenizer, tokenString) {
+  constructor (typeOfTokenizer, stringToTokenize) {
     this.#typeOfTokenizer = typeOfTokenizer
-    this.#tokenString = tokenString
+    this.#stringToTokenize = stringToTokenize
     this.#setActiveTokenizer()
   }
 
@@ -25,11 +23,11 @@ class Tokenizer {
     switch (this.#typeOfTokenizer) {
       case TOKENIZER_OPTIONS.WORD_AND_DOT:
         // const { default: WordTokenizer } = await import('./WordTokenizer.js')
-        this.#activeTokenizer = new WordTokenizer()
+        this.#activeTokenizer = new WordTokenizer(this.#stringToTokenize )
         break
       case TOKENIZER_OPTIONS.ARITHMETIC:
         // const { default: ArithmeticTokenizer } = await import('./ArithmeticTokenizer.js')
-        this.#activeTokenizer = new ArithmeticTokenizer()
+        this.#activeTokenizer = new ArithmeticTokenizer(this.#stringToTokenize )
         break
       default:
         throw new Error('Please choose a supported tokenizer type')
@@ -61,7 +59,7 @@ class Tokenizer {
   }
 
   getAllTokens() {
-    
+    this.#activeTokenizer.getAllTokens()
   }
 
 

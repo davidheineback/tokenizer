@@ -1,22 +1,23 @@
 const LEXICAL_GRAMMAR = {
-  WORD: /^[\w|åäöÅÄÖ]+/,
-  DOT: /^\./
+  WORD: /[\w|åäöÅÄÖ]+/g,
+  DOT: /\./g
 }
 
 Object.freeze(LEXICAL_GRAMMAR)
 
 class WordTokenizer {
-  #activeTokenizerRegex
   #arrayOfTokens = []
+  #typeOfTokenizer
+  #stringToTokenize 
 
-  constructor (typeOfTokenizer, tokenString) {
-    this.typeOfTokenizer = 'WORD_AND_DOT'
-    this.tokenString = tokenString
+  constructor (stringToTokenize) {
+    this.#typeOfTokenizer = 'WORD_AND_DOT'
+    this.#stringToTokenize = stringToTokenize
   }
 
 
   getName() {
-    console.log(this.typeOfTokenizer)
+    console.log(this.#typeOfTokenizer)
   }
 
   activeToken() {
@@ -40,7 +41,10 @@ class WordTokenizer {
   }
 
   getAllTokens() {
-    
+    const words = this.#stringToTokenize.match(LEXICAL_GRAMMAR.WORD)
+    const dots = this.#stringToTokenize.match(LEXICAL_GRAMMAR.DOT)
+    console.log(words)
+    console.log(dots)
   }
 
 }

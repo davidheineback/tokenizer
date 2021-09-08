@@ -1,23 +1,24 @@
 const LEXICAL_GRAMMAR = {
   NUMBER: /^[0-9]+(\.([0-9])+)?/ ,
-  ADD: /^[+]/,
-  MULTIPLY: /^[*]/,
-  SUBTRACT: /^[-]/,
+  ADD: /^[\+]/,
+  MULTIPLY: /[\*]/,
+  SUBTRACT: /^[\-]/,
   DIVIDE: /^[\/]/,
-  PARENTHESES: /^[()]/
+  PARENTHESES: /^[\(\)]/
 }
 
 class ArithmeticTokenizer {
-  #activeTokenizerRegex
   #arrayOfTokens = []
+  #typeOfTokenizer
+  #stringToTokenize
 
-  constructor (typeOfTokenizer, tokenString) {
-    this.typeOfTokenizer = 'ARITHMETIC'
-    this.tokenString = tokenString
+  constructor (stringToTokenize) {
+    this.#typeOfTokenizer = 'ARITHMETIC'
+    this.#stringToTokenize = stringToTokenize
   }
 
   getName() {
-    console.log(this.typeOfTokenizer)
+    console.log(this.#typeOfTokenizer)
   }
 
   activeToken() {
