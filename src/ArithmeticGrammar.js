@@ -7,7 +7,7 @@ const LEXICAL_GRAMMAR = {
   PARENTHESES: /^[\(\)]/
 }
 
-class ArithmeticTokenizer {
+class ArithmeticGrammar {
   #arrayOfTokens = []
   #typeOfTokenizer
   #stringToTokenize
@@ -47,4 +47,4 @@ class ArithmeticTokenizer {
 
 }
 
-export default ArithmeticTokenizer
+export default ArithmeticGrammar
