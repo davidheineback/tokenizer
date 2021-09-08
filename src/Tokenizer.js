@@ -1,6 +1,3 @@
-import WordTokenizer from './WordTokenizer.js'
-import ArithmeticTokenizer from './ArithmeticTokenizer.js'
-
 const TOKENIZER_OPTIONS = {
   WORD_AND_DOT: 'WORD_AND_DOT',
   ARITHMETIC: 'ARITHMETIC'
@@ -9,33 +6,12 @@ const TOKENIZER_OPTIONS = {
 Object.freeze(TOKENIZER_OPTIONS)
 
 class Tokenizer {
-  #activeTokenizer
   #stringToTokenize
-  #typeOfTokenizer
+  #typeOfLexicalGrammar
 
-  constructor (typeOfTokenizer, stringToTokenize) {
-    this.#typeOfTokenizer = typeOfTokenizer
+  constructor (typeOfLexicalGrammar, stringToTokenize) {
+    this.#typeOfLexicalGrammar = typeOfLexicalGrammar
     this.#stringToTokenize = stringToTokenize
-    this.#setActiveTokenizer()
-  }
-
-  async #setActiveTokenizer () {
-    switch (this.#typeOfTokenizer) {
-      case TOKENIZER_OPTIONS.WORD_AND_DOT:
-        // const { default: WordTokenizer } = await import('./WordTokenizer.js')
-        this.#activeTokenizer = new WordTokenizer(this.#stringToTokenize )
-        break
-      case TOKENIZER_OPTIONS.ARITHMETIC:
-        // const { default: ArithmeticTokenizer } = await import('./ArithmeticTokenizer.js')
-        this.#activeTokenizer = new ArithmeticTokenizer(this.#stringToTokenize )
-        break
-      default:
-        throw new Error('Please choose a supported tokenizer type')
-    }
-  }
-
-  getName() {
-    this.#activeTokenizer.getName()
   }
 
   activeToken() {
@@ -51,15 +27,15 @@ class Tokenizer {
   }
 
   countTokens() {
-    // counts the number of tokens
+    return this.#typeOfLexicalGrammar.countTokens(this.#stringToTokenize)
   }
 
   createTokens() {
-    // takes a regex and returns tokens or throws error
+      return this.#typeOfLexicalGrammar.createTokens(this.#stringToTokenize)
   }
 
-  getAllTokens() {
-    this.#activeTokenizer.getAllTokens()
+  createAndSpecifyTokens() {
+    return this.#typeOfLexicalGrammar.createAndSpecifyTokens(this.#stringToTokenize)
   }
 
 
