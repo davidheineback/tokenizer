@@ -5,8 +5,8 @@ export default class ArithmeticGrammar extends Grammar {
   #regexWithTypes
 
   constructor () {
-    super()
-    this.#generalRegex = /^[0-9]+(\.([0-9])+)?/
+    super() 
+    this.#generalRegex = /[\+|\*|\/|\(\)\=]|[0-9]+(\.([0-9])+)?/g
     this.#regexWithTypes = [
       {
         tokenType: 'NUMBER',
@@ -19,7 +19,7 @@ export default class ArithmeticGrammar extends Grammar {
       ,
       {
         tokenType: 'MULTIPLY',
-        regex: /^[\+]/g
+        regex: /^[\*]/g
       }
       ,
       {
@@ -35,6 +35,10 @@ export default class ArithmeticGrammar extends Grammar {
       {
         tokenType: 'PARENTHESES',
         regex: /^[\(\)]/g
+      },
+      {
+        tokenType: 'EQUALS',
+        regex: /^[\=]/g
       }
     ]
     this.setGenerelRegexExpressions(this.#generalRegex)

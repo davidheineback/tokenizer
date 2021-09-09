@@ -8,10 +8,11 @@ export default class Tokenizer {
     this.#generalLexicalGrammar = lexicalGrammar.getGenerelRegexExpressions()
     this.#lexicalGrammarWithTypes = lexicalGrammar.getRegexExpressionsWithTypes()
     this.#stringToTokenize = stringToTokenize
-    this.checkForInvalidTokens()
+    // this.checkForInvalidTokens()
   }
 
   checkForInvalidTokens() {
+    console.log(this.#stringToTokenize.match(this.#generalLexicalGrammar))
     if (this.#stringToTokenize.replace(this.#generalLexicalGrammar, '').trim().length > 0) {
       throw new Error('Found non supported token')
     }
@@ -21,10 +22,13 @@ export default class Tokenizer {
     return this.#stringToTokenize.match(this.#generalLexicalGrammar).length
   }
 
-    createTokens() {
+
+  createTokens() {
     this.#arrayOfTokens = this.#stringToTokenize.match(this.#generalLexicalGrammar)
+    console.log(this.#arrayOfTokens)
     return this.#arrayOfTokens
   }
+
 
     createAndSpecifyTokens() {
     this.createTokens()
