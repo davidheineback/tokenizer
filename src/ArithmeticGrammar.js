@@ -1,50 +1,50 @@
-const LEXICAL_GRAMMAR = {
-  NUMBER: /^[0-9]+(\.([0-9])+)?/ ,
-  ADD: /^[\+]/,
-  MULTIPLY: /[\*]/,
-  SUBTRACT: /^[\-]/,
-  DIVIDE: /^[\/]/,
-  PARENTHESES: /^[\(\)]/
+import Grammar from './Grammar.js'
+
+export default class ArithmeticGrammar extends Grammar {
+  #generalRegex
+  #regexWithTypes
+
+  constructor () {
+    super()
+    this.#generalRegex = /^[0-9]+(\.([0-9])+)?/
+    this.#regexWithTypes = [
+      {
+        tokenType: 'NUMBER',
+        regex: /^[0-9]+(\.([0-9])+)?/g
+      },
+      {
+        tokenType: 'ADD',
+        regex: /^[\+]/g
+      }
+      ,
+      {
+        tokenType: 'MULTIPLY',
+        regex: /^[\+]/g
+      }
+      ,
+      {
+        tokenType: 'SUBTRACT',
+        regex: /^[\-]/g
+      }
+      ,
+      {
+        tokenType: 'DIVIDE',
+        regex: /^[\/]/g
+      }
+      ,
+      {
+        tokenType: 'PARENTHESES',
+        regex: /^[\(\)]/g
+      }
+    ]
+  }
+
+  getGenerelRegexExpressions() {
+    return this.#generalRegex
+  }
+
+  getRegexExpressionsWithTypes() {
+    return this.#regexWithTypes
+  }
+
 }
-
-class ArithmeticGrammar {
-  #arrayOfTokens = []
-  #typeOfTokenizer
-  #stringToTokenize
-
-  constructor (stringToTokenize) {
-    this.#typeOfTokenizer = 'ARITHMETIC'
-    this.#stringToTokenize = stringToTokenize
-  }
-
-  getName() {
-    console.log(this.#typeOfTokenizer)
-  }
-
-  activeToken() {
-    // Describes the currently active token
-  }
-
-  firstToken() {
-    // Finds the first token
-  }
-
-  hasNext() {
-    // Are there more tokens?
-  }
-
-  countTokens() {
-    // counts the number of tokens
-  }
-
-  createTokens() {
-    // takes a regex and returns tokens or throws error
-  }
-
-  getAllTokens() {
-    
-  }
-
-}
-
-export default ArithmeticGrammar

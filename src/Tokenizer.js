@@ -7,11 +7,47 @@ Object.freeze(TOKENIZER_OPTIONS)
 
 class Tokenizer {
   #stringToTokenize
-  #typeOfLexicalGrammar
+  #generalLexicalGrammar
+  #lexicalGrammarWithTypes
+  #arrayOfTokens = []
 
-  constructor (typeOfLexicalGrammar, stringToTokenize) {
-    this.#typeOfLexicalGrammar = typeOfLexicalGrammar
+  constructor (lexicalGrammar, stringToTokenize) {
+    this.#generalLexicalGrammar = lexicalGrammar.getGenerelRegexExpressions()
+    this.#lexicalGrammarWithTypes = lexicalGrammar.getRegexExpressionsWithTypes()
     this.#stringToTokenize = stringToTokenize
+  }
+
+  countTokens() {
+    return this.#stringToTokenize.match(this.#generalLexicalGrammar).length
+  }
+
+    createTokens() {
+    this.#arrayOfTokens = this.#stringToTokenize.match(this.#generalLexicalGrammar)
+    return this.#arrayOfTokens
+  }
+
+    createAndSpecifyTokens() {
+    this.createTokens()
+    return this.#arrayOfTokens.map((token => {
+      const typeDesider = []
+      this.#lexicalGrammarWithTypes.forEach(type => {
+        if (token.match(type.regex)) {
+            typeDesider.push({ 
+              tokenType: type.tokenType,
+              regex: type.regex,
+              tokenValue: token 
+            })
+        }
+      })
+        if (typeDesider.length === 1) {
+          return typeDesider[0]
+        } else if (typeDesider.length > 1) {
+          //Add maximalmunch method
+          return 'Multiple hits'
+        } else {
+          throw new Error('Non supported token in string')
+        }
+    }))
   }
 
   activeToken() {
@@ -25,20 +61,6 @@ class Tokenizer {
   hasNext() {
     // Are there more tokens?
   }
-
-  countTokens() {
-    return this.#typeOfLexicalGrammar.countTokens(this.#stringToTokenize)
-  }
-
-  createTokens() {
-      return this.#typeOfLexicalGrammar.createTokens(this.#stringToTokenize)
-  }
-
-  createAndSpecifyTokens() {
-    return this.#typeOfLexicalGrammar.createAndSpecifyTokens(this.#stringToTokenize)
-  }
-
-
 }
 
 export default Tokenizer
