@@ -1,11 +1,4 @@
-const TOKENIZER_OPTIONS = {
-  WORD_AND_DOT: 'WORD_AND_DOT',
-  ARITHMETIC: 'ARITHMETIC'
-}
-
-Object.freeze(TOKENIZER_OPTIONS)
-
-class Tokenizer {
+export default class Tokenizer {
   #stringToTokenize
   #generalLexicalGrammar
   #lexicalGrammarWithTypes
@@ -15,6 +8,13 @@ class Tokenizer {
     this.#generalLexicalGrammar = lexicalGrammar.getGenerelRegexExpressions()
     this.#lexicalGrammarWithTypes = lexicalGrammar.getRegexExpressionsWithTypes()
     this.#stringToTokenize = stringToTokenize
+    this.checkForInvalidTokens()
+  }
+
+  checkForInvalidTokens() {
+    if (this.#stringToTokenize.replace(this.#generalLexicalGrammar, '').trim().length > 0) {
+      throw new Error('Found non supported token')
+    }
   }
 
   countTokens() {
@@ -50,7 +50,7 @@ class Tokenizer {
     }))
   }
 
-  activeToken() {
+  getActiveToken(sequence) {
     // Describes the currently active token
   }
 
@@ -62,5 +62,3 @@ class Tokenizer {
     // Are there more tokens?
   }
 }
-
-export default Tokenizer
