@@ -16,15 +16,7 @@ export default class WordGrammar extends Grammar {
         regex: /\./g
       }
     ]
-    
+    this.setGenerelRegexExpressions(this.#generalRegex)
+    this.setRegexExpressionsWithTypes(this.#regexWithTypes)
   }
-
-  getGenerelRegexExpressions() {
-    return this.#generalRegex
-  }
-
-  getRegexExpressionsWithTypes() {
-    return this.#regexWithTypes
-  }
-
 }

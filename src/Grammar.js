@@ -1,12 +1,25 @@
 export default class Grammar {
+  #generalRegex
+  #regexWithTypes
+
   constructor () {
+    this.#generalRegex
+    this.#regexWithTypes
   }
 
-  // getGenerelRegexExpression() {
-  //   return this.#generalRegex
-  // }
-  
-  // getRegexExpressionWithTypes() {
-  //   return this.#regexWithTypes
-  // }
+  setGenerelRegexExpressions(regex) {
+    this.#generalRegex = regex
+  }
+
+  getGenerelRegexExpressions() {
+    return this.#generalRegex
+  }
+
+  setRegexExpressionsWithTypes(regex) {
+    this.#regexWithTypes = regex
+  }
+
+  getRegexExpressionsWithTypes() {
+    return this.#regexWithTypes
+  }
 }
