@@ -8,7 +8,7 @@ export default class Tokenizer {
 
   constructor (lexicalGrammar, stringToTokenize) {
     this.#lexicalGrammarWithTypes = lexicalGrammar.getRegexExpressionsWithTypes()
-    this.#stringToTokenize = stringToTokenize
+    this.#stringToTokenize = stringToTokenize.trim()
     this.#errorMessage = lexicalGrammar.getErrorMessage()
     this.#arrayOfTokens = this.createTokens()
     this.#activeIndex = 0
@@ -48,15 +48,15 @@ export default class Tokenizer {
   }
 
   createTokens() {
-    if (this.#stringToTokenize.length > 0) {
+    // if (this.#stringToTokenize.length > 0) {
         while (this.#stringToTokenize.length > 0) {
         this.#temporaryArrayOfTokens = []
         this.matchStringWithRegex()
         this.addBestTokenMatch()
       }
-    } else {
-      throw new Error('No string to tokenize!')
-    }
+    // } else {
+    //   throw new Error('No string to tokenize!')
+    // }
     return this.#arrayOfTokens
   }
 
