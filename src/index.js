@@ -1,25 +1,9 @@
 import Tokenizer from "./Tokenizer.js"
 import WordGrammar from './WordGrammar.js'
 import ArithmeticGrammar from "./ArithmeticGrammar.js"
+import MaximalMunchGrammar from './MaximalMunchGrammar.js'
 
-
-function tokenizer () {
-  const wordGrammar = new WordGrammar()
-  const token = new Tokenizer(wordGrammar, ' ')
-  console.log(token.getTokens())
-  console.log(token.getActiveToken())
-  // token.setActiveTokenToNext()
-  // console.log(token.getActiveToken())
-  // token.setActiveTokenToPrevious()
-  // console.log(token.getActiveToken())
-  // token.setNewStringToTokenize('Hej på dig')
-  // console.log(token.getTokens())
-  // console.log(`\n String contains ${token.countTokens()} valid tokens \n`)
-
-  // const arithmeticGrammar = new ArithmeticGrammar()
-  // const token2 = new Tokenizer(arithmeticGrammar, '11.2+21*10/20+(20+2)=hej323')
-  // console.log(token2.getTokens())
-  // console.log(token2.getActiveToken())
-}
-
-tokenizer()
+export const Tokenizer = new Tokenizer()
+export const WordGrammar = new WordGrammar()
+export const ArithmeticGrammar = new ArithmeticGrammar()
+export const MaximalMunchGrammar = new MaximalMunchGrammar()
