@@ -2,6 +2,7 @@ export default class Tokenizer {
   #stringToTokenize
   #lexicalGrammarWithTypes
   #arrayOfTokens = []
+  #temporaryArrayOfTokens = []
   #errorMessage
   #activeIndex
 
@@ -11,18 +12,6 @@ export default class Tokenizer {
     this.#errorMessage = lexicalGrammar.getErrorMessage()
     this.#arrayOfTokens = this.createTokens()
     this.#activeIndex = 0
-  }
-
-  setNewStringToTokenize(stringToTokenize) {
-    this.#stringToTokenize = stringToTokenize
-    this.resetTokenizer()
-    this.createTokens()
-  }
-
-  setNewLexicalGrammar(lexicalGrammar) {
-    this.#lexicalGrammarWithTypes = lexicalGrammar.getRegexExpressionsWithTypes()
-    this.resetTokenizer()
-    this.createTokens()
   }
 
   resetTokenizer() {
@@ -60,33 +49,10 @@ export default class Tokenizer {
 
   createTokens() {
     if (this.#stringToTokenize.length > 0) {
-      let stringPlaceholder = this.#stringToTokenize
-      let arrayOfTokenMatches = []
-      while (stringPlaceholder.length > 0) {
-        this.#lexicalGrammarWithTypes.forEach(grammar => {
-          if (stringPlaceholder.match(grammar.regex)) {
-            let currentMatch = stringPlaceholder.match(grammar.regex)[0]
-            arrayOfTokenMatches.push({ 
-                tokenType: grammar.tokenType,
-                regex: grammar.regex,
-                tokenValue: currentMatch 
-              }
-            )
-          }
-        })
-          if (arrayOfTokenMatches.length > 0) {
-            arrayOfTokenMatches.sort((a, b) => b.tokenValue.length - a.tokenValue.length)
-            this.#arrayOfTokens.push(arrayOfTokenMatches[0])
-            stringPlaceholder = stringPlaceholder.replace(arrayOfTokenMatches[0].tokenValue, '').trim()
-            arrayOfTokenMatches = []
-          } else {
-            this.#arrayOfTokens.push({ 
-              tokenType: this.#errorMessage,
-              regex: this.#errorMessage,
-              tokenValue: stringPlaceholder
-            })
-            stringPlaceholder = ''
-          }
+        while (this.#stringToTokenize.length > 0) {
+        this.#temporaryArrayOfTokens = []
+        this.matchStringWithRegex()
+        this.addBestTokenMatch()
       }
     } else {
       throw new Error('No string to tokenize!')
@@ -94,11 +60,44 @@ export default class Tokenizer {
     return this.#arrayOfTokens
   }
 
-  firstToken() {
-    // Finds the first token
+
+  matchStringWithRegex() {
+    this.#lexicalGrammarWithTypes.forEach(grammar => {
+      if (this.#stringToTokenize.match(grammar.regex)) {
+        this.#temporaryArrayOfTokens.push({ 
+            tokenType: grammar.tokenType,
+            regex: grammar.regex,
+            tokenValue: this.#stringToTokenize.match(grammar.regex)[0] 
+          }
+        )
+      }
+    })
   }
 
-  hasNext() {
-    // Are there more tokens?
+  addBestTokenMatch() {
+    if (this.#temporaryArrayOfTokens.length > 0) {
+      this.#temporaryArrayOfTokens.sort((current, next) => next.tokenValue.length - current.tokenValue.length)
+      this.#arrayOfTokens.push(this.#temporaryArrayOfTokens[0])
+      this.#stringToTokenize = this.#stringToTokenize.replace(this.#temporaryArrayOfTokens[0].tokenValue, '').trim()
+    } else {
+      this.#arrayOfTokens.push({ 
+        tokenType: this.#errorMessage,
+        regex: this.#errorMessage,
+        tokenValue: this.#stringToTokenize
+      })
+      this.#stringToTokenize = ''
+    }
+  }
+
+  setNewStringToTokenize(stringToTokenize) {
+    this.#stringToTokenize = stringToTokenize
+    this.resetTokenizer()
+    this.createTokens()
+  }
+
+  setNewLexicalGrammar(lexicalGrammar) {
+    this.#lexicalGrammarWithTypes = lexicalGrammar.getRegexExpressionsWithTypes()
+    this.resetTokenizer()
+    this.createTokens()
   }
 }
