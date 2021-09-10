@@ -1,59 +1,59 @@
 export default class Tokenizer {
   #stringToTokenize
-  #generalLexicalGrammar
   #lexicalGrammarWithTypes
   #arrayOfTokens = []
+  #errorMessage
 
   constructor (lexicalGrammar, stringToTokenize) {
-    this.#generalLexicalGrammar = lexicalGrammar.getGenerelRegexExpressions()
     this.#lexicalGrammarWithTypes = lexicalGrammar.getRegexExpressionsWithTypes()
     this.#stringToTokenize = stringToTokenize
-    // this.checkForInvalidTokens()
-  }
-
-  checkForInvalidTokens() {
-    console.log(this.#stringToTokenize.match(this.#generalLexicalGrammar))
-    if (this.#stringToTokenize.replace(this.#generalLexicalGrammar, '').trim().length > 0) {
-      throw new Error('Found non supported token')
-    }
+    this.#errorMessage = lexicalGrammar.getErrorMessage()
+    this.#arrayOfTokens = this.createTokens()
   }
 
   countTokens() {
-    return this.#stringToTokenize.match(this.#generalLexicalGrammar).length
+    return this.#arrayOfTokens.length
   }
 
-
-  createTokens() {
-    this.#arrayOfTokens = this.#stringToTokenize.match(this.#generalLexicalGrammar)
-    console.log(this.#arrayOfTokens)
+  getTokens() {
     return this.#arrayOfTokens
   }
 
-
-    createAndSpecifyTokens() {
-    this.createTokens()
-    return this.#arrayOfTokens.map((token => {
-      const typeDesider = []
-      this.#lexicalGrammarWithTypes.forEach(type => {
-        if (token.match(type.regex)) {
-            typeDesider.push({ 
-              tokenType: type.tokenType,
-              regex: type.regex,
-              tokenValue: token 
+  createTokens() {
+    if (this.#stringToTokenize.length > 0) {
+      let stringPlaceholder = this.#stringToTokenize
+      let arrayOfTokenMatches = []
+      while (stringPlaceholder.length > 0) {
+        this.#lexicalGrammarWithTypes.forEach(grammar => {
+          if (stringPlaceholder.match(grammar.regex)) {
+            let currentMatch = stringPlaceholder.match(grammar.regex)[0]
+            arrayOfTokenMatches.push({ 
+                tokenType: grammar.tokenType,
+                regex: grammar.regex,
+                tokenValue: currentMatch 
+              }
+            )
+          }
+        })
+          if (arrayOfTokenMatches.length > 0) {
+            arrayOfTokenMatches.sort((a, b) => b.tokenValue.length - a.tokenValue.length)
+            this.#arrayOfTokens.push(arrayOfTokenMatches[0])
+            stringPlaceholder = stringPlaceholder.replace(arrayOfTokenMatches[0].tokenValue, '').trim()
+            arrayOfTokenMatches = []
+          } else {
+            this.#arrayOfTokens.push({ 
+              tokenType: this.#errorMessage,
+              regex: this.#errorMessage,
+              tokenValue: stringPlaceholder
             })
-        }
-      })
-        if (typeDesider.length === 1) {
-          return typeDesider[0]
-        } else if (typeDesider.length > 1) {
-          //Add maximalmunch method
-          return 'Multiple hits'
-        } else {
-          throw new Error('Non supported token in string')
-        }
-    }))
+            stringPlaceholder = ''
+          }
+      }
+    } else {
+      throw new Error('No string to tokenize!')
+    }
+    return this.#arrayOfTokens
   }
-
   getActiveToken(sequence) {
     // Describes the currently active token
   }
