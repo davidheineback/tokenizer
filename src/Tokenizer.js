@@ -48,15 +48,11 @@ export default class Tokenizer {
   }
 
   createTokens() {
-    // if (this.#stringToTokenize.length > 0) {
         while (this.#stringToTokenize.length > 0) {
         this.#temporaryArrayOfTokens = []
         this.matchStringWithRegex()
         this.addBestTokenMatch()
       }
-    // } else {
-    //   throw new Error('No string to tokenize!')
-    // }
     return this.#arrayOfTokens
   }
 
