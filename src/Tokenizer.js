@@ -3,12 +3,31 @@ export default class Tokenizer {
   #lexicalGrammarWithTypes
   #arrayOfTokens = []
   #errorMessage
+  #activeIndex
 
   constructor (lexicalGrammar, stringToTokenize) {
     this.#lexicalGrammarWithTypes = lexicalGrammar.getRegexExpressionsWithTypes()
     this.#stringToTokenize = stringToTokenize
     this.#errorMessage = lexicalGrammar.getErrorMessage()
     this.#arrayOfTokens = this.createTokens()
+    this.#activeIndex = 0
+  }
+
+  setNewStringToTokenize(stringToTokenize) {
+    this.#stringToTokenize = stringToTokenize
+    this.resetTokenizer()
+    this.createTokens()
+  }
+
+  setNewLexicalGrammar(lexicalGrammar) {
+    this.#lexicalGrammarWithTypes = lexicalGrammar.getRegexExpressionsWithTypes()
+    this.resetTokenizer()
+    this.createTokens()
+  }
+
+  resetTokenizer() {
+    this.#arrayOfTokens = []
+    this.#activeIndex = 0
   }
 
   countTokens() {
@@ -17,6 +36,26 @@ export default class Tokenizer {
 
   getTokens() {
     return this.#arrayOfTokens
+  }
+
+  getActiveToken() {
+    if (this.#activeIndex === this.#arrayOfTokens.length) {
+      return { tokenType: 'END', regex: 'END', tokenValue: 'END' }
+    } else {
+      return this.#arrayOfTokens[this.#activeIndex]
+    }
+  }
+
+  setActiveTokenToNext() {
+    if (this.#activeIndex < this.#arrayOfTokens.length) {
+      this.#activeIndex = this.#activeIndex + 1
+    }
+  }
+
+  setActiveTokenToPrevious() {
+    if (this.#activeIndex > 0) {
+      this.#activeIndex = this.#activeIndex - 1
+    }
   }
 
   createTokens() {
@@ -53,9 +92,6 @@ export default class Tokenizer {
       throw new Error('No string to tokenize!')
     }
     return this.#arrayOfTokens
-  }
-  getActiveToken(sequence) {
-    // Describes the currently active token
   }
 
   firstToken() {

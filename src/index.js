@@ -5,17 +5,26 @@ import ArithmeticGrammar from "./ArithmeticGrammar.js"
 
 function tokenizer () {
   const wordGrammar = new WordGrammar()
-  const arithmeticGrammar = new ArithmeticGrammar()
+  const token = new Tokenizer(wordGrammar, 'Hello there')
+  token.setActiveTokenToNext()
+  console.log(token.getTokens())
+  console.log(token.getActiveToken())
+  token.setNewStringToTokenize('Hej på dig')
+  console.log(token.getTokens())
 
-  const token = new Tokenizer(wordGrammar, 'Sträng m.ed tokens.')
-  console.log(token.createTokens())
-  console.log(token.createAndSpecifyTokens())
+
   console.log(`\n String contains ${token.countTokens()} valid tokens \n`)
 
-  const token2 = new Tokenizer(arithmeticGrammar, '11.2+21*10/20+(20+2)=3')
-  console.log(token2.createTokens())
-  console.log(token2.createAndSpecifyTokens())
+  const arithmeticGrammar = new ArithmeticGrammar()
+  const token2 = new Tokenizer(arithmeticGrammar, '11.2+21*10/20+(20+2)=hej323')
+  console.log(token2.getTokens())
 
+  token.setActiveTokenToNext()
+  token.setActiveTokenToNext()
+  token.setActiveTokenToNext()
+  token.setActiveTokenToNext()
+  token.setActiveTokenToNext()
+  token.setActiveTokenToPrevious()
 }
 
 tokenizer()
