@@ -1,18 +1,13 @@
 export default class Grammar {
-  #generalRegex
   #regexWithTypes
+  #lexicalErrorMessage
 
   constructor () {
-    this.#generalRegex
     this.#regexWithTypes
+    this.#lexicalErrorMessage = 'LEXICAL ERROR'
   }
-
-  setGenerelRegexExpressions(regex) {
-    this.#generalRegex = regex
-  }
-
-  getGenerelRegexExpressions() {
-    return this.#generalRegex
+  getErrorMessage() {
+    return this.#lexicalErrorMessage
   }
 
   setRegexExpressionsWithTypes(regex) {
