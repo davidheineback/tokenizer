@@ -2,24 +2,12 @@ import Grammar from './Grammar.js'
 
 export default class ArithmeticGrammar extends Grammar {
   #regexWithTypes
-  
-  
-  // {
-  //   tokenType: 'NUMBER',
-  //   regex: /^[0-9]+(\.([0-9])+)?/g
-  // },
-
-
   constructor () {
     super() 
     this.#regexWithTypes = [
       {
-        tokenType: 'INTEGER',
-        regex: /^[0-9]+/g
-      },
-      {
-        tokenType: 'FLOAT',
-        regex: /^[0-9]+\.[0-9]+/g
+        tokenType: 'NUMBER',
+        regex: /^[0-9]+(\.([0-9])+)?/g
       },
       {
         tokenType: 'ADD',
