@@ -1,3 +1,6 @@
+import IndexError from "./IndexError.js"
+import LexicalError from "./LexicalError.js"
+
 export default class Tokenizer {
   #stringToTokenize
   #lexicalGrammarWithTypes
@@ -23,11 +26,8 @@ export default class Tokenizer {
     return this.#arrayOfTokens.length
   }
 
-  getTokens() {
-    return this.#arrayOfTokens
-  }
-
   getActiveToken() {
+    this.isActiveTokenValid()
     if (this.#activeIndex === this.#arrayOfTokens.length) {
       return { tokenType: 'END', regex: 'END', tokenValue: 'END' }
     } else {
@@ -35,15 +35,25 @@ export default class Tokenizer {
     }
   }
 
+  isActiveTokenValid() {
+    if (this.#arrayOfTokens[this.#activeIndex]?.tokenType === this.#errorMessage) {
+
+      throw new LexicalError(this.#arrayOfTokens[this.#activeIndex].tokenValue)
+    }
+  }
+
   setActiveTokenToNext() {
     if (this.#activeIndex < this.#arrayOfTokens.length) {
       this.#activeIndex = this.#activeIndex + 1
     }
+    this.isActiveTokenValid()
   }
 
   setActiveTokenToPrevious() {
     if (this.#activeIndex > 0) {
       this.#activeIndex = this.#activeIndex - 1
+    } else {
+      throw new IndexError()
     }
   }
 
