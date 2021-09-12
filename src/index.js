@@ -2,8 +2,19 @@ import Tokenizer from "./Tokenizer.js"
 import WordGrammar from './WordGrammar.js'
 import ArithmeticGrammar from "./ArithmeticGrammar.js"
 import MaximalMunchGrammar from './MaximalMunchGrammar.js'
+import ExclamationGrammar from './ExclamationGrammar.js'
 
-export const Tokenizer = new Tokenizer()
-export const WordGrammar = new WordGrammar()
-export const ArithmeticGrammar = new ArithmeticGrammar()
-export const MaximalMunchGrammar = new MaximalMunchGrammar()
+function tokenizer() {
+  const wordGrammar = new WordGrammar()
+  const arithmeticGrammar = new ArithmeticGrammar()
+  const maximalMunchGrammar = new MaximalMunchGrammar()
+  const exclamationGrammar = new ExclamationGrammar()
+
+  const token = new Tokenizer(exclamationGrammar, '! + H!EJ')
+  token.setActiveTokenToNext()
+  
+  console.log(token.getActiveToken())
+  
+}
+
+tokenizer()
