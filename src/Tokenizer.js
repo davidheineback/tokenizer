@@ -37,7 +37,6 @@ export default class Tokenizer {
 
   #isActiveTokenValid() {
     if (this.#arrayOfTokens[this.#activeIndex]?.tokenType === this.#errorMessage) {
-
       throw new LexicalError(this.#arrayOfTokens[this.#activeIndex].tokenValue)
     }
   }
@@ -58,11 +57,11 @@ export default class Tokenizer {
   }
 
   #createTokens() {
-        while (this.#stringToTokenize.length > 0) {
-        this.#temporaryArrayOfTokens = []
-        this.#matchStringWithRegex()
-        this.#addBestTokenMatch()
-      }
+  while (this.#stringToTokenize.length > 0) {
+    this.#temporaryArrayOfTokens = []
+    this.#matchStringWithRegex()
+    this.#addBestTokenMatch()
+  }
     return this.#arrayOfTokens
   }
 
