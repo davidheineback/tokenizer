@@ -13,11 +13,11 @@ export default class Tokenizer {
     this.#lexicalGrammarWithTypes = lexicalGrammar.getRegexExpressionsWithTypes()
     this.#stringToTokenize = stringToTokenize.trim()
     this.#errorMessage = lexicalGrammar.getErrorMessage()
-    this.#arrayOfTokens = this.createTokens()
+    this.#arrayOfTokens = this.#createTokens()
     this.#activeIndex = 0
   }
 
-  resetTokenizer() {
+  #resetTokenizer() {
     this.#arrayOfTokens = []
     this.#activeIndex = 0
   }
@@ -27,7 +27,7 @@ export default class Tokenizer {
   }
 
   getActiveToken() {
-    this.isActiveTokenValid()
+    this.#isActiveTokenValid()
     if (this.#activeIndex === this.#arrayOfTokens.length) {
       return { tokenType: 'END', regex: 'END', tokenValue: 'END' }
     } else {
@@ -35,7 +35,7 @@ export default class Tokenizer {
     }
   }
 
-  isActiveTokenValid() {
+  #isActiveTokenValid() {
     if (this.#arrayOfTokens[this.#activeIndex]?.tokenType === this.#errorMessage) {
 
       throw new LexicalError(this.#arrayOfTokens[this.#activeIndex].tokenValue)
@@ -46,7 +46,7 @@ export default class Tokenizer {
     if (this.#activeIndex < this.#arrayOfTokens.length) {
       this.#activeIndex = this.#activeIndex + 1
     }
-    this.isActiveTokenValid()
+    this.#isActiveTokenValid()
   }
 
   setActiveTokenToPrevious() {
@@ -57,17 +57,17 @@ export default class Tokenizer {
     }
   }
 
-  createTokens() {
+  #createTokens() {
         while (this.#stringToTokenize.length > 0) {
         this.#temporaryArrayOfTokens = []
-        this.matchStringWithRegex()
-        this.addBestTokenMatch()
+        this.#matchStringWithRegex()
+        this.#addBestTokenMatch()
       }
     return this.#arrayOfTokens
   }
 
 
-  matchStringWithRegex() {
+  #matchStringWithRegex() {
     this.#lexicalGrammarWithTypes.forEach(grammar => {
       if (this.#stringToTokenize.match(grammar.regex)) {
         this.#temporaryArrayOfTokens.push({ 
@@ -80,7 +80,7 @@ export default class Tokenizer {
     })
   }
 
-  addBestTokenMatch() {
+  #addBestTokenMatch() {
     if (this.#temporaryArrayOfTokens.length > 0) {
       this.#temporaryArrayOfTokens.sort((current, next) => next.tokenValue.length - current.tokenValue.length)
       this.#arrayOfTokens.push(this.#temporaryArrayOfTokens[0])
@@ -97,13 +97,13 @@ export default class Tokenizer {
 
   setNewStringToTokenize(stringToTokenize) {
     this.#stringToTokenize = stringToTokenize
-    this.resetTokenizer()
-    this.createTokens()
+    this.#resetTokenizer()
+    this.#createTokens()
   }
 
   setNewLexicalGrammar(lexicalGrammar) {
     this.#lexicalGrammarWithTypes = lexicalGrammar.getRegexExpressionsWithTypes()
-    this.resetTokenizer()
-    this.createTokens()
+    this.#resetTokenizer()
+    this.#createTokens()
   }
 }
