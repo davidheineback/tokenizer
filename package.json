@@ -1,6 +1,6 @@
 {
   "name": "@david-heineback/tokenizer",
-  "version": "1.0.7",
+  "version": "1.0.9",
   "description": "Takes a string and make tokens ",
   "type": "module",
   "main": "src/index.js",
