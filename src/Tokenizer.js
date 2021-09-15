@@ -44,6 +44,8 @@ export default class Tokenizer {
   setActiveTokenToNext() {
     if (this.#activeIndex < this.#arrayOfTokens.length) {
       this.#activeIndex = this.#activeIndex + 1
+    } else {
+      throw new IndexError()
     }
     this.#isActiveTokenValid()
   }
