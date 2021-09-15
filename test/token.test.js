@@ -80,7 +80,7 @@ describe('Testing for Tokenizer', () => {
     const tokenizer = new Tokenizer(wordGrammar, stringToTest)
     expect(() => {
       tokenizer.setActiveTokenToPrevious()
-    }).toThrow('Error due to trying to set current index to index < than index 0.')
+    }).toThrow('Error due to trying to set current index to a invalid index.')
   })
   it('TC11 - WordAndDotGrammar - test string: ! - sequence:-', () => {
     const stringToTest = '!'
@@ -179,5 +179,22 @@ describe('Testing for Tokenizer', () => {
     expect(() => {
       tokenizer.setActiveTokenToNext()
     }).toThrow('Lexical error: No match found for örld!')
+  })
+  it('TC24 - ExclamationGrammar - test string: Hello World sequence: >>', () => {
+    const stringToTest = 'Hello World'
+    const tokenizer = new Tokenizer(exclamationGrammar, stringToTest)
+    tokenizer.setActiveTokenToNext()
+    tokenizer.setActiveTokenToNext()
+    expect(tokenizer.getActiveToken().tokenValue).toEqual('END')
+    expect(tokenizer.getActiveToken().tokenType).toEqual('END')
+  })
+  it('TC25 - ExclamationGrammar - test string: Hello World sequence: >>>', () => {
+    const stringToTest = 'Hello World'
+    const tokenizer = new Tokenizer(exclamationGrammar, stringToTest)
+    tokenizer.setActiveTokenToNext()
+    tokenizer.setActiveTokenToNext()
+    expect(() => {
+      tokenizer.setActiveTokenToNext()
+    }).toThrow('Error due to trying to set current index to a invalid index.')
   })
 })
