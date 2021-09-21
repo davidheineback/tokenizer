@@ -197,4 +197,43 @@ describe('Testing for Tokenizer', () => {
       tokenizer.setActiveTokenToNext()
     }).toThrow('Error due to trying to set current index to a invalid index.')
   })
+    it('TC26 - ArithmeticGrammar - test string: (3 + 54) * 4 - sequence:', () => {
+    const stringToTest = '(3 + 54) * 4'
+    const tokenizer = new Tokenizer(arithmeticGrammar, stringToTest)
+    expect(tokenizer.getActiveToken().tokenValue).toEqual('(')
+    expect(tokenizer.getActiveToken().tokenType).toEqual('LEFT PARENTHESES')
+  })
+  it('TC27 - ArithmeticGrammar - test string: (3 + 54) * 4 - sequence:>>>>', () => {
+    const stringToTest = '(3 + 54) * 4'
+    const tokenizer = new Tokenizer(arithmeticGrammar, stringToTest)
+    tokenizer.setActiveTokenToNext()
+    tokenizer.setActiveTokenToNext()
+    tokenizer.setActiveTokenToNext()
+    tokenizer.setActiveTokenToNext()
+    expect(tokenizer.getActiveToken().tokenValue).toEqual(')')
+    expect(tokenizer.getActiveToken().tokenType).toEqual('RIGHT PARENTHESES')
+  })
+  it('TC28 - ArithmeticGrammar - test string: 3 / 54 * 4 - sequence:>', () => {
+    const stringToTest = '3 / 54 * 4'
+    const tokenizer = new Tokenizer(arithmeticGrammar, stringToTest)
+    tokenizer.setActiveTokenToNext()
+    expect(tokenizer.getActiveToken().tokenValue).toEqual('/')
+    expect(tokenizer.getActiveToken().tokenType).toEqual('DIVIDE')
+  })
+  it('TC29 - ArithmeticGrammar - test string: 3 - 54 * 4 - sequence:>', () => {
+    const stringToTest = '3 - 54 * 4'
+    const tokenizer = new Tokenizer(arithmeticGrammar, stringToTest)
+    tokenizer.setActiveTokenToNext()
+    expect(tokenizer.getActiveToken().tokenValue).toEqual('-')
+    expect(tokenizer.getActiveToken().tokenType).toEqual('SUBTRACT')
+  })
+  it('TC30 - ArithmeticGrammar - test string: 3 - 2 = 1 - sequence:>>>', () => {
+    const stringToTest = '3 - 2 = 1'
+    const tokenizer = new Tokenizer(arithmeticGrammar, stringToTest)
+    tokenizer.setActiveTokenToNext()
+    tokenizer.setActiveTokenToNext()
+    tokenizer.setActiveTokenToNext()
+    expect(tokenizer.getActiveToken().tokenValue).toEqual('=')
+    expect(tokenizer.getActiveToken().tokenType).toEqual('EQUALS')
+  })
 })
