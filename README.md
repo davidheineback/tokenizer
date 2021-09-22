@@ -84,6 +84,7 @@ export default class YourGrammar extends Grammar {
   }
 }
 ```
+### Methods: 
 
 ##### Get the token att current index.
  - getActiveToken()
