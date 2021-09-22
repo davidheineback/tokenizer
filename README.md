@@ -16,11 +16,12 @@
     Tokenizer is a class that takes a grammar and a string as arguments and provides methods to see active token and step through array of tokens
     
 ```javascript=
+const grammarType = new Grammar() // use your desired grammar from the list of provided  grammars or create your own grammar by following the instructions inte the Create own grammar section below.
 const token = new Tokenizer(grammarType, 'String to tokenize')
 ```
     
 
-#### Grammars
+#### Provided grammars
  - WordGrammar - Finds words and dots.
      - WORDS (Including åäö)
      - DOT (.)
@@ -40,10 +41,28 @@ const token = new Tokenizer(grammarType, 'String to tokenize')
     - WORDS (Excluding åäö)
     - EXCLAMATION (!)
 
-#### Create own grammar
-    Create your own grammar by extending the Grammar class and adding regex with tokenType and regex as a object to the this.#regexWithTypes array. See example below:
+### Create own grammar
+Create your own grammar by either create a new Grammar and use the setRegexExpressionsWithTypes or create your own class by extending the Grammar class and adding regex with tokenType and regex as a object to the this.#regexWithTypes array. See example below:
 
+#### Note that it is very important to use the ^ in the beginning of the regex to ensure that it works with the tokenizer
 
+### Use the set method directly on the Grammar class.
+```javascript=
+const newGrammar = new Grammar()
+const grammarArray = [
+       {
+        tokenType: 'YOUR TOKEN TYPE',
+        regex: /^[\w|åäöÅÄÖ]+/g
+      },
+      {
+        tokenType: 'DOT',
+        regex: /^\./g
+      }
+]
+newgrammar.setRegexExpressionsWithTypes(grammarArray)
+```
+
+### Create your own grammar as a class by extending the Grammar class.
 ```javascript=
 import Grammar from './Grammar.js'
 export default class YourGrammar extends Grammar {
