@@ -97,8 +97,8 @@ Lista de enskilda testfallen. **Fetmarkera** sådant som du själv fyllt i. En r
 | TC6 | WordAndDotGrammar  |  a .b  | [>><] | DOT(.) | PASS |
 | TC7 | WordAndDotGrammar  |  empty string | [] | END(END)  | PASS |
 | TC8 | WordAndDotGrammar  | only a ws    | [] | **END(END)**  | PASS |
-| TC9 | WordAndDotGrammar  |  a      | [>] | END(END)  | PASS |
-| TC10 | WordAndDotGrammar  |  a      | [<] | Throws index error | PASS |
+| TC9 | WordAndDotGrammar  |  a      | **[>]** | END(END)  | PASS |
+| TC10 | WordAndDotGrammar  |  a      | [<] | **Throws index error** | PASS |
 | TC11 | WordAndDotGrammar  |  !      | [] | Throws lexical error | PASS |
 | TC12 | ArithmeticGrammar  |  3      | [] | NUMBER(3)  | PASS |
 | TC13 | ArithmeticGrammar  |  3.14   | [] | NUMBER(3.14)  | PASS |
@@ -153,15 +153,15 @@ Lista de enskilda testfallen. En rad per testfall.
 | **getActiveToken()** metod i Tokenizer klassen som returnerar en aktiv token | 5       | **Switch Statements** - Jag hade en plan på att använda en switch sats i denna metod för att avgöra om jag ska returenera ett END objekt eller en aktiv token men eftersom boken avråder från detta då de av sin natur blir långa så valde jag istället att köra med if/else. <br/> **Reading Code from Top to Bottom: The Stepdown Rule** - Metoden kallar först på en metod för att kontrollera att aktiv token är "valid" och returnerar sedan aktiv token eller ett END objekt.    |
 | **setActiveTokenToNext()**: Sets the active token to the next index | 5           | **Error Handling Is One Thing** - Jag har skapat egna klasser för att hantera fel. I denna metod kastas ett undantag (IndexError) om man försöker stega sig förbi END token. <br/> **Command Query Separation** Denna metoden sätter endast index för aktiv Token till nuvarande index plus ett eller kastar ett fel om index blir större än längden på array med tokens. Jag skickade till en början tillbaka den nya aktiva token direkt när användaren exekverade denna metod men eftersom att detta avsnitt säger att metoden ska antingen göra något ett besvara något, inte båda så valde jag att ta bort returen av aktiv token och använder får istället kalla på getActiveToken() efter att denna metod körts för att få ut data på ny aktiv token. Däremot så kontrollerar jag i denna metoden om det index man stegar till innehåller ett lexikalt fel och jag kastar då direkt ett undantag vilket man också skulle kunna flytta och endast ha på getActiveToken(). Men jag gör på detta sättet eftersom att lexikala fel ligger sist i arrayen av tokens och användaren ska inte kunna stega sig vidare eller få detta som aktivt token |
 
-## Laborationsreflektion
-
-- **Avoid Disinformation** - Ingen av metod eller klassnamn  innehåller förkortningar eller liknanade namn för olika saker.  
-- **Make Meaningful Distinctions** - Jag har försökt undvika noice words, det man skulle kunna fundera över klassnamen för de olika grammatikerna som samtliga heter **PrefixGrammar** t.ex. WordGrammar och ArithmeticGrammar men det är olika grammatiker.  
-- **Use searchable names** - Jag använder inga enstaviga ord eller variabler. Jag undviker iteratorer som kräver att det deklareas en variabel bara för att hålla koll på iterationen.  
-- **Avoid Mental Mapping** - Jag använder långa och förklarande namn och försöker undervika förkortningar. Man skulle kunna se regex som en förkortningen men detta förekommer inte i någon publik metod.  
-- **Don’t Be Cute** - Inga metoder använder sentimentala namn eller namn som ska anses vara "skojiga".
-
- - Genom att följa de punkter som tas upp i kapitel två om namgiving uppfyller metoder **Use Descriptive Names** som diskuteras i kapitel 3 om funktioner. 
- - Metoder som börjar med # är privata metoder.
-- Det finns två metoder som är **Monadic** dessa är inte specificerade i tabellen nedan. Det är metoder som jag har lagt in på Tokenizer klassen för att kunna återanvända samma Tokenizer objekt flera gånger utan att skapa en ny Tokenizer. setNewLexicalGrammar(lexicalGrammar),  setNewStringToTokenize(stringToTokenize). Parametrarna på dessa två metoder ska varken kontrolleras som boolska värden eller förändras i sig **(Common Monadic Forms)** och de ska heller inte ses som ett **Output Argument** då det är en input till vad som förändras på Tokenizer objektet och metoderna returnerar inte något till användaren.  -  
-- **Small** - Metoden är liten och mindre än de 20 rader som boken menar att man ska försöka hålla sig under <br/>
+## Laborationsreflektion  
+Jag valde att skapa en Tokenizer som direkt vid skapandet delar upp hela strängen i tokens. Jag testade även att lägga till så att en token endast skapas när man ber om den som aktiv men eftersom att koden då blev beroende av flera olika if/else satser så valde jag att tokenisera allt på en gång.  
+Jag testade även att skicka med 40.000 lorem ipsum ord och punkter för att jämföra prestandan på de två olika alterantiven och det var inget som var märkbart.  
+Gällande namngivning försökte jag direkt att följa de riktlinjer/rubriker som tas upp i Clean Code. Utöver "regex" finns ingen metod eller klassnamn som innehåller förkortningar eller liknanade namn för olika saker (**Avoid Disinformation**).  
+Jag har försökt undvika noice words, det man skulle kunna fundera över klassnamen för de olika grammatikerna som samtliga heter **PrefixGrammar** t.ex. WordGrammar och ArithmeticGrammar men det är olika grammatiker (**Make Meaningful Distinctions**).  
+Det ska i koden inte finnas några enstaviga ord eller variabler. Jag undviker iteratorer som kräver att det deklareas en variabel bara för att hålla koll på iterationen nuvarande index (**Use searchable names**).  
+Jag använder långa och förklarande namn och försöker undervika förkortningar. Som tidigare nämts skulle kunna se regex som en förkortningen men jag har så långt som möjligt försökt att undvika att ha det med i några publika metoder och den enda som innehåller det är metoden som används för att sätta regex på en ny Grammar som skapas av användaren (**Avoid Mental Mapping** ).  
+Inga metoder använder sentimentala namn eller namn som ska anses vara "skojiga" (**Don’t Be Cute**).  
+ Genom att följa de punkter som tas upp i kapitel två om namgiving uppfyller metoder **Use Descriptive Names** som diskuteras i kapitel 3 om funktioner. 
+Metoder som börjar med # är syntax för privata metoder i javascript.
+Det finns tre metoder som är **Monadic**. Det är utöver setter metoden på Grammar klassen två metoder som jag har lagt in på Tokenizer klassen för att kunna återanvända samma Tokenizer objekt flera gånger utan att skapa en ny Tokenizer. setNewLexicalGrammar(lexicalGrammar),  setNewStringToTokenize(stringToTokenize). Parametrarna på dessa två metoder ska varken kontrolleras som boolska värden eller förändras i sig **(Common Monadic Forms)** och de ska heller inte ses som ett **Output Argument** då det är en input till vad som förändras på Tokenizer objektet och metoderna returnerar inte något till användaren. I övrigt är metoderna **niladic**  
+Metoderna är små och samtliga är mindre än de 20 rader som boken menar att man ska försöka hålla sig under (**Small**).
