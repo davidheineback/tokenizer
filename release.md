@@ -31,32 +31,49 @@ Instruktioner och komplett exempel finns i [README.md](./README.md) eller på [n
 ## Beskrivning av min kod
 ### Classes:
 - Tokenizer: 
-  - Tokenizer is a class that takes a grammar and a string as arguments and provides methods to see active token and step through array of tokens.  
+  - **Svenska:** Tokekizer är en klass som tar emot en grammatik  och en sträng som argument och håller sedan metoder för att se aktiv token och stega sig fram och tillbaka genom en array av tokens.  
+
+  - **English:** Tokenizer is a class that takes a grammar and a string as arguments and provides methods to see active token and step through array of tokens.  
 - Grammar:
-  - Create your own grammar by either create a new Grammar and use the setRegexExpressionsWithTypes or create your own class by extending the Grammar class and adding regex with tokenType and regex as a object to the this.#regexWithTypes array. See examples in [README.md](./README.md)
+  - **Svenska:** Skapa din egen grammatik genom att antingen använda "new Grammar" och sedan använda metoden setRegexExpressionsWithTypes för att sätta grammatiken eller skapa en helt egen klass genom att "extenda" Grammar klassen och lägg till dina reguljära uttryck som objekt i arrayen this.#regexWithTypes. Se exempel i [README.md](./README.md)  
+
+  - **English** Create your own grammar by either create a new Grammar and use the setRegexExpressionsWithTypes or create your own class by extending the Grammar class and adding regex with tokenType and regex as a object to the this.#regexWithTypes array. See examples in [README.md](./README.md)
    
 
 ### Methods:
+Hämta aktiv token  
 Get the token att current index.
 
-    getActiveToken() returns the currently active token as object with token type, regex used to match and token value. Throw Error Throws a LexicalError if trying to access a index that contains a token with a lexical error
+    getActiveToken()
+    Svenska:  Returnerar aktiv token som ett object med tokentyp, reguljärt uttryck och tokenvärdet. Kastar lexikalt fel om man försöker hämta en token på ett index som innehåller en token med lexikalt fel.  
 
+    English: returns the currently active token as object with token type, regex used to match and token value. Throw Error: Throws a LexicalError if trying to access a index that contains a token with a lexical error
+
+Sätt aktiv token till nästa index  
 Set the active token to the next index.
 
-    setActiveTokenToNext() Throw Error Throws a LexicalError if trying to access a index that contains a token with a lexical error
+    setActiveTokenToNext()  
+    Svenska: Kastar lexikalt fel om man försöker hämta en token på ett index som innehåller en token med lexikalt fel. Kastar indexfel om man försöker sätta aktiv token till ett värde efter END token.   
+    English: Throws a LexicalError if trying to access a index that contains a token with a lexical error. Throws a IndexError if trying to access a index after END token.
 
+Sätt aktiv token till förgående index.
 Set the active token to the previous index.
 
-    setActiveTokenToPrevious() Throw Error Throws a IndexError if trying to access a index before index 0.
+    setActiveTokenToPrevious()
+    Svenska: Kastar indexfel om man försöker sätta index till ett värde mindre än 0.
+    English: Throws a IndexError if trying to access a index before index 0.
 
+Sätt en ny sträng att tokenizera.
 Set a new string to tokenize by passing a new string.
 
     token.setNewStringToTokenize('New string to tokenize')
 
+Sätt en ny lexikal grammatik att använda genom att skicka med en ny grammatik.
 Set a new lexical grammar to use to tokenize by passing a new grammar.
 
     setNewLexicalGrammar(arithmeticGrammar)
 
+Räkna antalet tokens som tokenizerats. (Inkluderar eventuell token med lexicalt fel!)
 Count number of tokens. (Will include count of invalid token!)
 
     countTokens()
@@ -75,11 +92,11 @@ Lista de enskilda testfallen. **Fetmarkera** sådant som du själv fyllt i. En r
 | TC1 | WordAndDotGrammar  | a | [] | WORD(a) | PASS |
 | TC2 | WordAndDotGrammar  | a aa | [>] | WORD(aa) | PASS |
 | TC3 | WordAndDotGrammar  | a.b | [>] | DOT(.)  | PASS |
-| TC4 | WordAndDotGrammar  | a.b | [>>] | WORD(b)  | PASS |
-| TC5 | WordAndDotGrammar  | aa. b | [>>] | WORD(b)  | PASS |
+| TC4 | WordAndDotGrammar  | a.b | [>>] | **WORD(b)**  | PASS |
+| TC5 | WordAndDotGrammar  | aa. b | **[>>]** | WORD(b)  | PASS |
 | TC6 | WordAndDotGrammar  |  a .b  | [>><] | DOT(.) | PASS |
 | TC7 | WordAndDotGrammar  |  empty string | [] | END(END)  | PASS |
-| TC8 | WordAndDotGrammar  | only a ws    | [] | END(END)  | PASS |
+| TC8 | WordAndDotGrammar  | only a ws    | [] | **END(END)**  | PASS |
 | TC9 | WordAndDotGrammar  |  a      | [>] | END(END)  | PASS |
 | TC10 | WordAndDotGrammar  |  a      | [<] | Throws index error | PASS |
 | TC11 | WordAndDotGrammar  |  !      | [] | Throws lexical error | PASS |
