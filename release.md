@@ -56,24 +56,24 @@ Set the active token to the next index.
     Svenska: Kastar lexikalt fel om man försöker hämta en token på ett index som innehåller en token med lexikalt fel. Kastar indexfel om man försöker sätta aktiv token till ett värde efter END token.   
     English: Throws a LexicalError if trying to access a index that contains a token with a lexical error. Throws a IndexError if trying to access a index after END token.
 
-Sätt aktiv token till förgående index.
+Sätt aktiv token till förgående index.  
 Set the active token to the previous index.
 
     setActiveTokenToPrevious()
     Svenska: Kastar indexfel om man försöker sätta index till ett värde mindre än 0.
     English: Throws a IndexError if trying to access a index before index 0.
 
-Sätt en ny sträng att tokenizera.
+Sätt en ny sträng att tokenizera.  
 Set a new string to tokenize by passing a new string.
 
     token.setNewStringToTokenize('New string to tokenize')
 
-Sätt en ny lexikal grammatik att använda genom att skicka med en ny grammatik.
+Sätt en ny lexikal grammatik att använda genom att skicka med en ny grammatik.  
 Set a new lexical grammar to use to tokenize by passing a new grammar.
 
     setNewLexicalGrammar(arithmeticGrammar)
 
-Räkna antalet tokens som tokenizerats. (Inkluderar eventuell token med lexicalt fel!)
+Räkna antalet tokens som tokenizerats. (Inkluderar eventuell token med lexicalt fel!)  
 Count number of tokens. (Will include count of invalid token!)
 
     countTokens()
