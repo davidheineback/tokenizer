@@ -6,7 +6,7 @@
   "main": "src/index.js",
   "scripts": {
     "start": "node src/index.js",
-    "test": "cross-env NODE_OPTIONS=--experimental-vm-modules npx jest --testTimeout=20000 --runInBand --detectOpenHandles --verbose --forceExit",
+    "test": "cross-env NODE_OPTIONS=--experimental-vm-modules npx jest --testTimeout=20000 --runInBand --coverage --detectOpenHandles --verbose --forceExit",
     "publish:public": "npm publish --access=public"
   },
   "repository": {

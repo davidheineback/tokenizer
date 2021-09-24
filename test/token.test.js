@@ -236,4 +236,37 @@ describe('Testing for Tokenizer', () => {
     expect(tokenizer.getActiveToken().tokenValue).toEqual('=')
     expect(tokenizer.getActiveToken().tokenType).toEqual('EQUALS')
   })
+  it('TC31 - Change string from Hello World to New. string to tokenize - sequence:>', () => {
+    const stringToTest = 'Hello World'
+    const tokenizer = new Tokenizer(wordGrammar, stringToTest)
+    tokenizer.setActiveTokenToNext()
+    expect(tokenizer.getActiveToken().tokenValue).toEqual('World')
+    expect(tokenizer.getActiveToken().tokenType).toEqual('WORD')
+    tokenizer.setNewStringToTokenize('New. string to tokenize')
+    tokenizer.setActiveTokenToNext()
+    expect(tokenizer.getActiveToken().tokenValue).toEqual('.')
+    expect(tokenizer.getActiveToken().tokenType).toEqual('DOT')
+  })
+  it('TC32 - Change from grammar from Arithmetic to Word - sequence:>', () => {
+    const stringToTest = '3 - 2 = 1'
+    const tokenizer = new Tokenizer(arithmeticGrammar, stringToTest)
+    tokenizer.setActiveTokenToNext()
+    expect(tokenizer.getActiveToken().tokenValue).toEqual('-')
+    expect(tokenizer.getActiveToken().tokenType).toEqual('SUBTRACT')
+    tokenizer.setNewLexicalGrammar(wordGrammar, stringToTest)
+    expect(() => {
+      tokenizer.setActiveTokenToNext()
+    }).toThrow('Lexical error: No match found for - 2 = 1')
+    
+  })
+  it('TC33 - Count number of tokens without errors', () => {
+    const stringToTest = 'No Errors!'
+    const tokenizer = new Tokenizer(exclamationGrammar, stringToTest)
+    expect(tokenizer.countTokens()).toEqual(3)
+  })
+  it('TC34 - Count number of tokens with lexical errors', () => {
+    const stringToTest = 'Somewhere is a .Error!'
+    const tokenizer = new Tokenizer(exclamationGrammar, stringToTest)
+    expect(tokenizer.countTokens()).toEqual(4)
+  })
 })
