@@ -100,11 +100,13 @@ export default class YourGrammar extends Grammar {
 **Throw Error** Throws a IndexError if trying to access a index before index 0.
 
 
+### Reuse same Tokenizer object:
+
 ##### Set a new string to tokenize by passing a new string.
 - token.setNewStringToTokenize('New string to tokenize')
 
-##### Set a new lexical grammar to use to tokenize by passing a new grammar.
- - setNewLexicalGrammar(arithmeticGrammar)
+##### Set a new lexical grammar to use to tokenize by passing a new grammar and a string to tokenize.
+ - setNewLexicalGrammar(arithmeticGrammar, 'string to tokenize')
 
 ##### Count number of tokens. (Will include count of invalid token!)
  - countTokens()
@@ -143,8 +145,8 @@ token.getActiveToken()
 // Set a new string to tokenize by passing a new string.
 token.setNewStringToTokenize('New string to tokenize')
 
-// Set a new lexical grammar to use to tokenize by passing a new grammar.
-token.setNewLexicalGrammar(arithmeticGrammar)
+//Set a new lexical grammar to use to tokenize by passing a new grammar and a new string to use with  the new lexical grammar.
+token.setNewLexicalGrammar(arithmeticGrammar, 'string to tokenize')
 
 // Count number of tokens. (Will include count of invalid token!)
 token.countTokens()```
