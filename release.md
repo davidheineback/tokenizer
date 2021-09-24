@@ -25,15 +25,14 @@
 
 Förtydligande: Examinator kommer sätta betyg oberoende på vad ni anser. 
 
-## Återanvändning
-Instruktioner och komplett exempel finns i [README.md](./README.md) eller på [npm](https://www.npmjs.com/package/@david-heineback/tokenizer)
+## Återanvändning    
+Instruktioner finns i [README.md](./README.md) med komplett exempel längst ner, eller på [npm](https://www.npmjs.com/package/@david-heineback/tokenizer)
 
 ## Beskrivning av min kod
 ### Classes:
 - Tokenizer: 
-  - **Svenska:** Tokekizer är en klass som tar emot en grammatik  och en sträng som argument och håller sedan metoder för att se aktiv token och stega sig fram och tillbaka genom en array av tokens.  
-
-  - **English:** Tokenizer is a class that takes a grammar and a string as arguments and provides methods to see active token and step through array of tokens.  
+  - **Svenska:** **Tokenizer** är en klass som tar emot en grammatik och en sträng som argument och håller sedan metoder för att se aktiv token och stega sig fram och tillbaka genom en array av tokens.  
+  - **English:** **Tokenizer** is a class that takes a grammar and a string as arguments and provides methods to see active token and step through array of tokens.    
 - Grammar:
   - **Svenska:** Skapa din egen grammatik genom att antingen använda "new Grammar" och sedan använda metoden setRegexExpressionsWithTypes för att sätta grammatiken eller skapa en helt egen klass genom att "extenda" Grammar klassen och lägg till dina reguljära uttryck som objekt i arrayen this.#regexWithTypes. Se exempel i [README.md](./README.md)  
 
@@ -63,15 +62,18 @@ Set the active token to the previous index.
     Svenska: Kastar indexfel om man försöker sätta index till ett värde mindre än 0.
     English: Throws a IndexError if trying to access a index before index 0.
 
+### Återanvänd skapat Tokenizer objekt:
+### Reuse same Tokenizer object:
+
 Sätt en ny sträng att tokenizera.  
 Set a new string to tokenize by passing a new string.
 
     token.setNewStringToTokenize('New string to tokenize')
 
-Sätt en ny lexikal grammatik att använda genom att skicka med en ny grammatik.  
-Set a new lexical grammar to use to tokenize by passing a new grammar.
+Sätt en ny lexikal grammatik att använda genom att skicka med en ny grammatik och vilken sträng som ska tokenizeras med den nya grammatiken.  
+Set a new lexical grammar to use to tokenize by passing a new grammar and a new string to use with  the new lexical grammar.
 
-    setNewLexicalGrammar(arithmeticGrammar)
+    setNewLexicalGrammar(arithmeticGrammar, 'String to tokenize')
 
 Räkna antalet tokens som tokenizerats. (Inkluderar eventuell token med lexicalt fel!)  
 Count number of tokens. (Will include count of invalid token!)
@@ -85,7 +87,11 @@ Automatiska testfall är skrivna med hjälp av testramverket Jest.
 Samtliga testfall finns i filen **./test/token.test.js** och kan köras med kommandot **npm test**. 
 
 ### Testfall
-Lista de enskilda testfallen. **Fetmarkera** sådant som du själv fyllt i. En rad per testfall.
+Lista de enskilda testfallen. **Fetmarkera** sådant som du själv fyllt i. En rad per testfall.  
+
+![Test Rapport](test/testReport.png)  
+
+
 
 | Namn      | Grammatik | Sträng | Sekvens | Förväntat Aktivt Token | PASS/FAIL |
 | --------- | --------- | ------ | ------- | ------------ | --------- |
@@ -107,7 +113,7 @@ Lista de enskilda testfallen. **Fetmarkera** sådant som du själv fyllt i. En r
 | TC16 | ArithmeticGrammar  |  3.0+54.1     + 4.2   | [><>>>] | ADD(+)  | PASS |
 
 
-Du kan tillföra kommentarer om din tokeniserare skiljer sig något från standard. 
+
 
 ### Testfall för högre betyg
 
@@ -128,15 +134,20 @@ Lista de enskilda testfallen. En rad per testfall.
 | TC28 | ArithmeticGrammar  |  3 / 54 * 4     | [>] | DIVIDE(/)  | PASS |
 | TC29 | ArithmeticGrammar  |  3 - 54 * 4  | [>] | SUBTRACT(-)  | PASS |
 | TC30 | ArithmeticGrammar  | 3 - 2 = 1 | [>>>] | EQUALS(=)  | PASS |
+| TC31 - Change string from Hello World to New. string to tokenize | WordAndDotGrammar  |  Hello World /  New. string to tokenize   | [>] | DOT(.)| PASS |
+| TC32 - Change from grammar from Arithmetic to Word | ArithmeticGrammar / WordAndDotGrammar   |  3 - 2 = 1 | [>] | Throws lexical error | PASS |
+| TC33 - Count number of tokens without errors | ExclamationGrammar  |  No Errors!  | [] | 3  | PASS |
+| TC34 - Count number of tokens with lexical errors | ExclamationGrammar  | Somewhere is a .Error! | [] | 4  | PASS |
+  
 
 ## Kodkvalitetskrav
 
 
 ### Namngivning
 
-| Namn och förklaring          | Reflektion |
-| ------------------           | ---------- |
-| **Tokenizer** <br/> Namn på Klass   |  Detta klassnamn bockar av flera av de rubriker som tas upp i boken. <br/>Det finns ingen förkortning eller någonting annat i programmet som har ett liknande namn **(Avoid Disinformation)**. Det är också lätt att **uttala namnet / (Use Pronounceable Names)** <br/><br/> Klassens namn är ett **substantiv** vilket rekommenderas för klasser och beskriver klassens syfte bra **(Use Intention-Revealing Names)**, . Eventuellt skulle man kunna döpa den till StringTokenizer för att förtydliga att det är strängar som tokeniseras.
+| Namn och förklaring | Reflektion |
+| ------------------  | ---------- |
+| **Tokenizer** <br/> Namn på Klass   |  Detta klassnamn bockar av flera av de rubriker som tas upp i boken. <br/>Det finns ingen förkortning eller någonting annat i programmet som har ett liknande namn **(Avoid Disinformation)**. Det är också lätt att **uttala namnet / (Use Pronounceable Names)** <br/><br/> Klassens namn är ett **substantiv** vilket rekommenderas för klasser och beskriver klassens syfte bra **(Use Intention-Revealing Names)**, . Eventuellt skulle man kunna döpa den till StringTokenizer för att förtydliga att det är strängar som tokeniseras. |
 | **WordGrammar** <br/> Namn på Klass | Detta klassnamn kan i viss mån ses som att det ger användaren disinformation **(Avoid disinformation)** då den faktiskt kan hantera både ord och punkter.            |
 | **Tokenizer.getActiveToken** <br/> Metod på Tokenizer klassen.    |    Metoden är en **"verb-fras"** som använder sig av "standard" **prefixet** **get**.. för att visa att metoden hämtar något   |
 | **Tokenizer.setActiveTokenToNext** <br/> **Tokenizer.setActiveTokenToPrevious** <br/> Metoder på Tokenizer klassen.    |   Även dessa använder sig aven **"verb-fras"** med **prefix** fast i detta fallet används **set** för att visa att det är ett värde som sätts om metoden körs.         |
@@ -159,9 +170,12 @@ Jag testade även att skicka med 40.000 lorem ipsum ord och punkter för att jä
 Gällande namngivning försökte jag direkt att följa de riktlinjer/rubriker som tas upp i Clean Code. Utöver "regex" finns ingen metod eller klassnamn som innehåller förkortningar eller liknanade namn för olika saker (**Avoid Disinformation**).  
 Jag har försökt undvika noice words, det man skulle kunna fundera över klassnamen för de olika grammatikerna som samtliga heter **PrefixGrammar** t.ex. WordGrammar och ArithmeticGrammar men det är olika grammatiker (**Make Meaningful Distinctions**).  
 Det ska i koden inte finnas några enstaviga ord eller variabler. Jag undviker iteratorer som kräver att det deklareas en variabel bara för att hålla koll på iterationen nuvarande index (**Use searchable names**).  
-Jag använder långa och förklarande namn och försöker undervika förkortningar. Som tidigare nämts skulle kunna se regex som en förkortningen men jag har så långt som möjligt försökt att undvika att ha det med i några publika metoder och den enda som innehåller det är metoden som används för att sätta regex på en ny Grammar som skapas av användaren (**Avoid Mental Mapping** ).  
+Jag använder långa och förklarande namn och försöker undervika förkortningar. Som tidigare nämts skulle man kunna se regex som en förkortningen men jag har så långt som möjligt försökt att undvika att ha det med i några publika metoder och den enda som innehåller det är metoden som används för att sätta regex på en ny Grammar som skapas av användaren (**Avoid Mental Mapping** ).  
 Inga metoder använder sentimentala namn eller namn som ska anses vara "skojiga" (**Don’t Be Cute**).  
  Genom att följa de punkter som tas upp i kapitel två om namgiving uppfyller metoder **Use Descriptive Names** som diskuteras i kapitel 3 om funktioner. 
-Metoder som börjar med # är syntax för privata metoder i javascript.
-Det finns tre metoder som är **Monadic**. Det är utöver setter metoden på Grammar klassen två metoder som jag har lagt in på Tokenizer klassen för att kunna återanvända samma Tokenizer objekt flera gånger utan att skapa en ny Tokenizer. setNewLexicalGrammar(lexicalGrammar),  setNewStringToTokenize(stringToTokenize). Parametrarna på dessa två metoder ska varken kontrolleras som boolska värden eller förändras i sig **(Common Monadic Forms)** och de ska heller inte ses som ett **Output Argument** då det är en input till vad som förändras på Tokenizer objektet och metoderna returnerar inte något till användaren. I övrigt är metoderna **niladic**  
+Metoder som börjar med # är syntax för privata metoder i javascript.  
+Det finns två metoder som är **monadic** och en **dyadic**, i övrigt är metoderna **niladic**.  
+Setter metoden på Grammar klassen tar en sträng som parameter och sedan finns det två metoder som jag har lagt in på Tokenizer klassen för att kunna återanvända samma Tokenizer objekt flera gånger utan att skapa en ny Tokenizer. setNewStringToTokenize som endast tar en ny sträng som argument och sedan setNewLexicalGrammar som tar en ny grammatik och en sträng som parameter.  
+På metoden för att sätta ny grammatik valde jag mellan att ha två parametrar **dyadic** och att ha en parameter **monadic** och att användaren då även får köra metoden för att sätta en ny sträng om denna metoden ska fungera korrekt men i just detta fallet kändes det mest användarvänligt att göra det i samma metod då strängen inte behöver vara en ny utan kan vara samma som man tidigare tokenizerat med en annan grammatik.  
+Parametrarna på dessa metoder ska varken kontrolleras som boolska värden eller förändras i sig **(Common Monadic Forms)** och de ska heller inte ses som ett **Output Argument** då det är en input till vad som förändras på Tokenizer objektet och metoderna returnerar inte något till användaren.
 Metoderna är små och samtliga är mindre än de 20 rader som boken menar att man ska försöka hålla sig under (**Small**).
