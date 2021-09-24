@@ -120,23 +120,23 @@ Lista de enskilda testfallen. **Fetmarkera** sådant som du själv fyllt i. En r
 Lista de enskilda testfallen. En rad per testfall.
 | Namn      | Grammatik | Sträng | Sekvens | Förväntat Aktivt Token | PASS/FAIL |
 | --------- | --------- | ------ | ------- | ------------ | --------- |
-| TC17 | MaximalMunchGrammar  | 3 | [] | INTEGER(3) | PASS |
-| TC18 | MaximalMunchGrammar  | 3.14| [] | FLOAT(3.14) | PASS |
-| TC19 | MaximalMunchGrammar  | 5 2 3.14 | [>>] | FLOAT(3.14)  | PASS |
-| TC20 | MaximalMunchGrammar  | 5  +2 3.14 | [>] | Throws lexical error  | PASS |
-| TC21 | ExclamationGrammar  | ! | [] | EXCLAMATION(!)  | PASS |
-| TC22 | ExclamationGrammar  |  ! Hello, World! | [>>] | Throws lexical error | PASS |
-| TC23 | ExclamationGrammar  |  ! Hello Wörld! | [>>>] | Throws lexical error  | PASS |
-| TC24 | ExclamationGrammar | Hello World   | [>>] | END(END)  | PASS |
-| TC25 | ExclamationGrammar  | Hello World  | [>>>] | Throws index error | PASS |
-| TC26 | ArithmeticGrammar | (3 + 54) * 4   | [] | LEFT PARENTHESES(() | PASS |
-| TC27 | ArithmeticGrammar  |  (3 + 54) * 4     | [>>>>] | RIGHT PARENTHESES())| PASS |
-| TC28 | ArithmeticGrammar  |  3 / 54 * 4     | [>] | DIVIDE(/)  | PASS |
-| TC29 | ArithmeticGrammar  |  3 - 54 * 4  | [>] | SUBTRACT(-)  | PASS |
-| TC30 | ArithmeticGrammar  | 3 - 2 = 1 | [>>>] | EQUALS(=)  | PASS |
-| TC31 - Change string from Hello World to New. string to tokenize | WordAndDotGrammar  |  Hello World /  New. string to tokenize   | [>] | DOT(.)| PASS |
-| TC32 - Change from grammar from Arithmetic to Word | ArithmeticGrammar / WordAndDotGrammar   |  3 - 2 = 1 | [>] | Throws lexical error | PASS |
-| TC33 - Count number of tokens without errors | ExclamationGrammar  |  No Errors!  | [] | 3  | PASS |
+| TC17 - Test MaximalMunchGrammar with string 3 and no sequence to find best token match INTEGER 3 | MaximalMunchGrammar  | 3 | [] | INTEGER(3) | PASS |
+| TC18 - Test MaximalMunchGrammar with string 3.14 and no sequence to find best token match FLOAT 3.14 | MaximalMunchGrammar  | 3.14| [] | FLOAT(3.14) | PASS |
+| TC19 - Test MaximalMunchGrammar with string 5 2 3.14 and sequence:>> to find best token match FLOAT 3.14 | MaximalMunchGrammar  | 5 2 3.14 | [>>] | FLOAT(3.14)  | PASS |
+| TC20 - Test MaximalMunchGrammar with string 5  +2 3.14 and sequence:> to test lexical error for +' | MaximalMunchGrammar  | 5  +2 3.14 | [>] | Throws lexical error  | PASS |
+| TC21 - Test ExclamationGrammar with string: ! and no sequence to get active token EXCLAMATION ! | ExclamationGrammar  | ! | [] | EXCLAMATION(!)  | PASS |
+| TC22 - Test ExclamationGrammar with string: ! Hello, World! and sequence:>> to test lexical error for , | ExclamationGrammar  |  ! Hello, World! | [>>] | Throws lexical error | PASS |
+| TC23 - Test ExclamationGrammar with string: ! Hello Wörld! and sequence: >>> to test lexical error for ö | ExclamationGrammar  |  ! Hello Wörld! | [>>>] | Throws lexical error  | PASS |
+| TC24 - Test ExclamationGrammar with string:  Hello World and sequence: >> to test END token | ExclamationGrammar | Hello World   | [>>] | END(END)  | PASS |
+| TC25 - Test ExclamationGrammar with string: Hello World and sequence: >>> to test index error after END token | ExclamationGrammar  | Hello World  | [>>>] | Throws index error | PASS |
+| TC26 - Test ArithmeticGrammar with string: (3 + 54) * 4 and no sequence to get active token LEFT PARENTHESES ( | ArithmeticGrammar | (3 + 54) * 4   | [] | LEFT PARENTHESES(() | PASS |
+| TC27 - Test ArithmeticGrammar with string: (3 + 54) * 4 and sequence:>>>> to get active token RIGHT PARENTHESES ) | ArithmeticGrammar  |  (3 + 54) * 4     | [>>>>] | RIGHT PARENTHESES())| PASS |
+| TC28 - Test ArithmeticGrammar with string: 3 / 54 * 4 and sequence:> to get active token DIVIDE / | ArithmeticGrammar  |  3 / 54 * 4     | [>] | DIVIDE(/)  | PASS |
+| TC29 - Test ArithmeticGrammar with string: 3 - 54 * 4 and sequence:> to get active token SUBTRACT - | ArithmeticGrammar  |  3 - 54 * 4  | [>] | SUBTRACT(-)  | PASS |
+| TC30 - Test ArithmeticGrammar with string: 3 - 2 = 1 and sequence:>>> to get active token EQUALS = | ArithmeticGrammar  | 3 - 2 = 1 | [>>>] | EQUALS(=)  | PASS |
+| TC31 - Change string from Hello World to New. string to tokenize and sequence:> to get active token DOT . | WordAndDotGrammar  |  Hello World /  New. string to tokenize   | [>] | DOT(.)| PASS |
+| TC32 - Change from grammar from Arithmetic to Word and sequence:> to test lexical error for - | ArithmeticGrammar / WordAndDotGrammar   |  3 - 2 = 1 | [>] | Throws lexical error | PASS |
+| TC33 - Count number of tokens without lexical errors | ExclamationGrammar  |  No Errors!  | [] | 3  | PASS |
 | TC34 - Count number of tokens with lexical errors | ExclamationGrammar  | Somewhere is a .Error! | [] | 4  | PASS |
   
 
