@@ -102,7 +102,8 @@ export default class Tokenizer {
     this.#createTokens()
   }
 
-  setNewLexicalGrammar(lexicalGrammar) {
+  setNewLexicalGrammar(lexicalGrammar, stringToTokenize) {
+    this.#stringToTokenize = stringToTokenize
     this.#lexicalGrammarWithTypes = lexicalGrammar.getRegexExpressionsWithTypes()
     this.#resetTokenizer()
     this.#createTokens()
