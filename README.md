@@ -48,7 +48,11 @@ Create your own grammar by either create a new Grammar and use the setRegexExpre
 
 ### Use the set method directly on the Grammar class.
 ```javascript=
-const newGrammar = new Grammar()
+import tokenizer from '@david-heineback/tokenizer'
+
+const { Grammar } = tokenizer
+const newGrammar = new Grammar.Grammar()
+
 const grammarArray = [
        {
         tokenType: 'YOUR TOKEN TYPE',
@@ -59,7 +63,7 @@ const grammarArray = [
         regex: /^\./g
       }
 ]
-newgrammar.setRegexExpressionsWithTypes(grammarArray)
+newGrammar.setRegexExpressionsWithTypes(grammarArray)
 ```
 
 ### Create your own grammar as a class by extending the Grammar class.
