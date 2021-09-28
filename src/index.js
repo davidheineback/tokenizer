@@ -7,9 +7,11 @@ import ExclamationGrammar from './ExclamationGrammar.js'
 
 export default { 
   Tokenizer,
+  Grammar: {
   Grammar,
   WordGrammar,
   ArithmeticGrammar,
   MaximalMunchGrammar,
   ExclamationGrammar
+  }
 }
